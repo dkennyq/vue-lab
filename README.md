@@ -1,1 +1,1 @@
-# vue-lab
+# vue-labs
