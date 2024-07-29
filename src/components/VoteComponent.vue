@@ -1,32 +1,65 @@
 <template>
-    <div class="card mb-3">
-        <div class="row g-0">
+    <div class="card mb-3" :style="{ background: `linear-gradient(to right, #F2F2F2, #303338)` }">
+        <div class="row g-0" id="cardContent">
+            <!-- <img :src="image" style="position: absolute; left: 0; top: 0; height: 100%; width: 200px;" /> -->
+            <!-- <div class="row g-0" :style="{ background: `url(${image}) left top no-repeat`, backgroundSize: 'cover' }"></div> -->
             <div class="col-md-4">
-                <img :src="image" class="img-fluid rounded-start" alt="...">
+                <img :src="image" class="img-fluid rounded-start" alt="{{ title }}" style="height: 200px; width:350px;">
+                <div :class="['icon-container', thumbIconColor]">
+                    <font-awesome-icon :icon="thumbIcon" class="text-white fs-2" />
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">{{ title }}</h5>
-                    <p class="card-text">{{ description }}</p>
-                    <p class="card-text"><small class="text-muted">{{ timeInfo }}</small></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <button @click="rate('up')" :class="{ active: userThumb === 'up' }"
-                                class="btn btn-success">👍</button>
-                            <button @click="rate('down')" :class="{ active: userThumb === 'down' }"
-                                class="btn btn-danger">👎</button>
+                    <div class="row">
+                        <div class="col d-flex justify-content-between align-items-start" id="cardInfoContainer">
+                            <div class="col" id="cardInfo">
+                                <h1 class="card-title text-white">{{ title }}</h1>
+                                <p class="card-text text-white">{{ description }}</p>
+                            </div>
+                            <div clas="col" id="votesControl">
+                                <p class="card-text text-white">
+                                    <small class="text-muted-white">{{ timeInfo }}</small>
+                                </p>
+                                <div>
+                                    <button @click="rate('up')" :class="{ active: userThumb === 'up' }"
+                                        class="btn btn-up">
+                                        <font-awesome-icon icon="thumbs-up" class="text-white fs-2" />
+                                    </button>
+                                    <button @click="rate('down')" :class="{ active: userThumb === 'down' }"
+                                        class="btn btn-down">
+                                        <font-awesome-icon icon="thumbs-down" class="text-white fs-2" />
+                                    </button>
+                                    <button class="btn bt-custom fs-5">{{ voteButtonText }}</button>
+                                </div>
+                            </div>
                         </div>
-                        <button class="btn btn-primary">{{ voteButtonText }}</button>
+
                     </div>
-                    <div class="mt-3">
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar"
-                                :style="{ width: thumbsUpPercentage + '%' }" aria-valuenow="thumbsUpPercentage"
-                                aria-valuemin="0" aria-valuemax="100">{{ thumbsUpPercentage }}%</div>
-                            <div class="progress-bar bg-danger" role="progressbar"
-                                :style="{ width: thumbsDownPercentage + '%' }" aria-valuenow="thumbsDownPercentage"
-                                aria-valuemin="0" aria-valuemax="100">{{ thumbsDownPercentage }}%</div>
-                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0 opacity-75" id="progressBar">
+
+            <div class="progress" style="height:50px;">
+                <div class="progress-bar progress-bar-up" role="progressbar"
+                    :style="{ width: thumbsUpPercentage + '%' }" aria-valuenow="thumbsUpPercentage" aria-valuemin="0"
+                    aria-valuemax="100">
+                    <div class="d-flex align-items-center">
+                        <font-awesome-icon icon="thumbs-up" class="text-white fs-2 m-1" />
+                        <span class="text-white fs-2 ml-2">
+                            {{ thumbsUpPercentage }}%
+                        </span>
+                    </div>
+                </div>
+                <div class="progress-bar progress-bar-down" role="progressbar"
+                    :style="{ width: thumbsDownPercentage + '%' }" aria-valuenow="thumbsDownPercentage"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <font-awesome-icon icon="thumbs-down" class="text-white fs-2 m-1" />
+                        <span class="text-white fs-2">
+                            {{ thumbsDownPercentage }}%
+                        </span>
                     </div>
                 </div>
             </div>
@@ -36,6 +69,8 @@
 
 <script>
 import axios from 'axios';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+
 export default {
     name: 'VoteCard',
     props: {
@@ -66,6 +101,12 @@ export default {
         },
         voteButtonText() {
             return this.userThumb ? 'Vote Again' : 'Vote Now';
+        },
+        thumbIcon() {
+            return this.thumbsUpPercentage >= this.thumbsDownPercentage ? faThumbsUp : faThumbsDown;
+        },
+        thumbIconColor() {
+            return this.thumbsUpPercentage >= this.thumbsDownPercentage ? 'icon-up' : 'icon-down';
         }
     },
     methods: {
@@ -94,7 +135,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+:root {
+    --color-up: #5BA69E;
+    --color-down: #BF9445;
+    --color-btn-up: #5BA69E;
+    --color-btn-down: #F2A649;
+}
+
 .card {
     max-width: 100%;
 }
@@ -104,7 +152,73 @@ export default {
     overflow: hidden;
 }
 
-button.active {
-    background-color: #007bff !important;
+.progress-bar-up {
+    background-color: var(--color-up);
+}
+
+.progress-bar-down {
+    background-color: var(--color-down);
+}
+
+.btn-up {
+    background-color: var(--color-btn-up);
+    margin-right: 10px;
+}
+
+.btn-down {
+    background-color: var(--color-btn-down);
+    margin-right: 10px;
+}
+
+.bt-custom {
+    background-color: #303338;
+    color: #fff;
+}
+
+#progressBar {
+    position: absolute;
+    bottom: 0cap;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    border-radius: 0;
+}
+
+#cardContent {
+    position: relative;
+    z-index: 0;
+    border-radius: 0;
+}
+
+#cardInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#votesControl {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.icon-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+}
+
+.icon-up {
+    background-color: var(--color-btn-up);
+}
+
+.icon-down {
+    background-color: var(--color-btn-down);
+}
+
+.btn:hover {
+    opacity: 0.8;
 }
 </style>

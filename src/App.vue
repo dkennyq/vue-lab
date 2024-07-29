@@ -12,6 +12,7 @@ import axios from 'axios';
 import VoteComponent from './components/VoteComponent.vue';
 
 export default {
+  title: 'Rule of Thumbs',
   name: 'App',
   components: {
     VoteComponent
