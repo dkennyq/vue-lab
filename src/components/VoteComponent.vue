@@ -1,13 +1,13 @@
 <template>
     <div class="card mb-3 square-border" :style="{ background: `linear-gradient(to right, #F2F2F2, #303338)` }">
         <div class="row g-0" id="cardContent">
-            <div class="col-md-4">
-                <img :src="image" class="img-fluid rounded-start" alt="{{ title }}" style="height: 200px; width:350px;">
+            <div class="col-md-3">
+                <img :src="image" class="img-fluid rounded-start opacity-75" alt="{{ title }}" style="height: 200px; width:350px;">
                 <div :class="['icon-container', thumbIconColor]">
                     <font-awesome-icon :icon="thumbIcon" class="text-white fs-2" />
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card-body square-border">
                     <div class="row">
                         <div class="col d-flex justify-content-between align-items-start" id="cardInfoContainer">
@@ -21,14 +21,14 @@
                                 </p>
                                 <div>
                                     <button @click="rate('up')" :class="{ active: userThumb === 'up' }"
-                                        class="btn btn-up square-border">
+                                        class="btn btn-vote-up square-border">
                                         <font-awesome-icon icon="thumbs-up" class="text-white fs-2" />
                                     </button>
                                     <button @click="rate('down')" :class="{ active: userThumb === 'down' }"
-                                        class="btn btn-down square-border">
+                                        class="btn btn-vote-down square-border">
                                         <font-awesome-icon icon="thumbs-down" class="text-white fs-2" />
                                     </button>
-                                    <button class="btn bt-custom fs-5 square-border">{{ voteButtonText }}</button>
+                                    <button class="btn btn-secondary fs-5 square-border border border-white">{{ voteButtonText }}</button>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="row g-0 opacity-75" id="progressBar">
             <div class="progress square-border" style="height:50px;">
-                <div class="progress-bar progress-bar-up" role="progressbar"
+                <div class="progress-bar-vote progress-bar-vote-up"  role="progressbar"
                     :style="{ width: thumbsUpPercentage + '%' }" aria-valuenow="thumbsUpPercentage" aria-valuemin="0"
                     aria-valuemax="100">
                     <div class="d-flex align-items-center">
@@ -49,7 +49,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="progress-bar progress-bar-down" role="progressbar"
+                <div class="progress-bar progress-bar-vote-down" role="progressbar"
                     :style="{ width: thumbsDownPercentage + '%' }" aria-valuenow="thumbsDownPercentage"
                     aria-valuemin="0" aria-valuemax="100">
                     <div class="d-flex align-items-center justify-content-end square-border">
@@ -103,7 +103,7 @@ export default {
             return this.thumbsUpPercentage >= this.thumbsDownPercentage ? faThumbsUp : faThumbsDown;
         },
         thumbIconColor() {
-            return this.thumbsUpPercentage >= this.thumbsDownPercentage ? 'icon-up' : 'icon-down';
+            return this.thumbsUpPercentage >= this.thumbsDownPercentage ? 'icon-vote-up' : 'icon-vote-down';
         }
     },
     methods: {
@@ -134,42 +134,42 @@ export default {
 
 <style>
 :root {
-    --color-up: #5BA69E;
-    --color-down: #BF9445;
-    --color-btn-up: #5BA69E;
-    --color-btn-down: #F2A649;
+    --color-vote-up: #5BA69E;
+    --color-vote-down: #BF9445;
+    --color-vote-btn-up: #5BA69E;
+    --color-vote-btn-down: #F2A649;
 }
 
 .card {
     max-width: 100%;
 }
 
-.progress-bar {
+.progress-bar-vote {
     white-space: nowrap;
     overflow: hidden;
     border-radius: 0 !important;
 }
 
-.progress-bar-up {
-    background-color: var(--color-up);
+.progress-bar-vote-up {
+    background-color: var(--color-vote-up) !important;
 }
 
-.progress-bar-down {
-    background-color: var(--color-down);
+.progress-bar-vote-down {
+    background-color: var(--color-vote-down) !important;
 }
 
-.btn-up {
-    background-color: var(--color-btn-up);
+.btn-vote-up {
+    background-color: var(--color-vote-btn-up) !important;
     margin-right: 10px;
 }
 
-.btn-down {
-    background-color: var(--color-btn-down);
+.btn-vote-down {
+    background-color: var(--color-vote-btn-down) !important;
     margin-right: 10px;
 }
 
 .bt-custom {
-    background-color: #303338;
+    background-color: #303338 !important;
     color: #fff;
 }
 
@@ -208,12 +208,12 @@ export default {
     padding: 5px;
 }
 
-.icon-up {
-    background-color: var(--color-btn-up);
+.icon-vote-up {
+    background-color: var(--color-vote-btn-up);
 }
 
-.icon-down {
-    background-color: var(--color-btn-down);
+.icon-vote-down {
+    background-color: var(--color-vote-btn-down);
 }
 
 .square-border {
