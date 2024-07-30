@@ -1,1 +1,2 @@
 export const API_BASE_URL_RULE_OF_THUMBS = 'https://95q6j16jse.execute-api.us-east-2.amazonaws.com/';
+export const PLACEHOLDER_IMAGE_URL = 'https://cdn.dribbble.com/users/110792/screenshots/17024372/media/7218f55266fffc61fa39bdf67acf0ae7.png';

@@ -1,6 +1,6 @@
 <template>
     <div id="detailPerson">
-        <div class="bg-image-div"  :style="{ backgroundImage: `url(${ person.profile_image })` }">
+        <div class="bg-image-div" :style="{ backgroundImage: `url(${person.profile_image})` }">
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -19,7 +19,7 @@
                                 <h1 v-if="person">{{ person.name }}</h1>
                                 <h1 v-else>Oh no 😢</h1>
                             </div>
-                            <div class="row">
+                            <div class="row" style="max-height: 180px; overflow-y: auto;">
                                 <p>
                                     {{ person.detail_info }}
                                 </p>
@@ -45,8 +45,18 @@
 
                     </div>
                 </div>
+                <!-- <div class="row">
+                    <div class="hero__closing-gauge">
+                        <div class="closing-gauge__left">
+                            <span class="closing-gauge__title">closing in</span>
+                        </div>
+                        <div class="closing-gauge__right">
+                            <span class="closing-gauge__number">22</span>
+                            <span class="closing-gauge__desc">days</span>
+                        </div>
+                    </div>
+                </div> -->
             </div>
-
         </div>
     </div>
 </template>

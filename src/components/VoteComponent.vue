@@ -122,6 +122,7 @@ export default {
             } else if (this.userThumb) {
                 this.Vote(this.userThumb);
                 this.$emit('select-person', this.person);
+                this.$emit('vote-submited');
             }
         },
         Vote(type) {
