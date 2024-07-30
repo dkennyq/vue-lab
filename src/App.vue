@@ -21,7 +21,8 @@ export default {
   },
   data() {
     return {
-      persons: []
+      persons: [],
+      selectedPerson: null
     };
   },
   mounted() {
@@ -32,6 +33,9 @@ export default {
       axios.get(`${API_BASE_URL_RULE_OF_THUMBS}/items`)
         .then(response => {
           this.persons = response.data;
+          if(this.persons.length > 0) {
+            this.selectedPerson = this.persons[0];
+          }
         })
         .catch(error => {
           console.error('There was an error:', error);

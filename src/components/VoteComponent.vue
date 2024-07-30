@@ -121,6 +121,7 @@ export default {
                 this.voteSubmited = false;
             } else if (this.userThumb) {
                 this.Vote(this.userThumb);
+                this.$emit('select-person', this.person);
             }
         },
         Vote(type) {
@@ -140,10 +141,6 @@ export default {
             }
 
             this.voteSubmited = true;
-        },
-        selectPerson() {
-            this.$emit('select-person', this.person);
-            console.log('Person selected:', this.person);
         },
         formatDate(dateString) {
             const now = new Date();

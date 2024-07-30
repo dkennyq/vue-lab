@@ -1,6 +1,6 @@
 <template>
     <div id="detailPerson">
-        <div class="bg-image-div">
+        <div class="bg-image-div"  :style="{ backgroundImage: `url(${ person.profile_image })` }">
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -21,8 +21,7 @@
                             </div>
                             <div class="row">
                                 <p>
-                                    He's talking tough on clergy sexual abuse, or is he just another pervert protector?
-                                    (thumbs down) or a true pedophile punishing pontiff? (thumbs up)
+                                    {{ person.detail_info }}
                                 </p>
                             </div>
                             <div class="row">
@@ -79,7 +78,6 @@ export default {
 }
 
 .bg-image-div {
-    background-image: url('https://e3.365dm.com/24/03/1600x900/skynews-pope-francis-good-friday_6504833.jpg?20240329210104');
     background-size: cover;
     background-position: center;
     height: 50vh;
