@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getPersons() {
-      axios.get('https://95q6j16jse.execute-api.us-east-2.amazonaws.com/items')
+      axios.get(`${API_BASE_URL_RULE_OF_THUMBS}/items`)
         .then(response => {
           this.persons = response.data;
         })
