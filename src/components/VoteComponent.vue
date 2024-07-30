@@ -1,8 +1,6 @@
 <template>
-    <div class="card mb-3" :style="{ background: `linear-gradient(to right, #F2F2F2, #303338)` }">
+    <div class="card mb-3 square-border" :style="{ background: `linear-gradient(to right, #F2F2F2, #303338)` }">
         <div class="row g-0" id="cardContent">
-            <!-- <img :src="image" style="position: absolute; left: 0; top: 0; height: 100%; width: 200px;" /> -->
-            <!-- <div class="row g-0" :style="{ background: `url(${image}) left top no-repeat`, backgroundSize: 'cover' }"></div> -->
             <div class="col-md-4">
                 <img :src="image" class="img-fluid rounded-start" alt="{{ title }}" style="height: 200px; width:350px;">
                 <div :class="['icon-container', thumbIconColor]">
@@ -10,12 +8,12 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card-body">
+                <div class="card-body square-border">
                     <div class="row">
                         <div class="col d-flex justify-content-between align-items-start" id="cardInfoContainer">
                             <div class="col" id="cardInfo">
-                                <h1 class="card-title text-white">{{ title }}</h1>
-                                <p class="card-text text-white">{{ description }}</p>
+                                <h1 class="card-title text-white fw-lighter">{{ title }}</h1>
+                                <p class="card-text text-white fw-lighter">{{ description }}</p>
                             </div>
                             <div clas="col" id="votesControl">
                                 <p class="card-text text-white">
@@ -23,14 +21,14 @@
                                 </p>
                                 <div>
                                     <button @click="rate('up')" :class="{ active: userThumb === 'up' }"
-                                        class="btn btn-up">
+                                        class="btn btn-up square-border">
                                         <font-awesome-icon icon="thumbs-up" class="text-white fs-2" />
                                     </button>
                                     <button @click="rate('down')" :class="{ active: userThumb === 'down' }"
-                                        class="btn btn-down">
+                                        class="btn btn-down square-border">
                                         <font-awesome-icon icon="thumbs-down" class="text-white fs-2" />
                                     </button>
-                                    <button class="btn bt-custom fs-5">{{ voteButtonText }}</button>
+                                    <button class="btn bt-custom fs-5 square-border">{{ voteButtonText }}</button>
                                 </div>
                             </div>
                         </div>
@@ -40,8 +38,7 @@
             </div>
         </div>
         <div class="row g-0 opacity-75" id="progressBar">
-
-            <div class="progress" style="height:50px;">
+            <div class="progress square-border" style="height:50px;">
                 <div class="progress-bar progress-bar-up" role="progressbar"
                     :style="{ width: thumbsUpPercentage + '%' }" aria-valuenow="thumbsUpPercentage" aria-valuemin="0"
                     aria-valuemax="100">
@@ -55,7 +52,7 @@
                 <div class="progress-bar progress-bar-down" role="progressbar"
                     :style="{ width: thumbsDownPercentage + '%' }" aria-valuenow="thumbsDownPercentage"
                     aria-valuemin="0" aria-valuemax="100">
-                    <div class="d-flex align-items-center justify-content-end">
+                    <div class="d-flex align-items-center justify-content-end square-border">
                         <font-awesome-icon icon="thumbs-down" class="text-white fs-2 m-1" />
                         <span class="text-white fs-2">
                             {{ thumbsDownPercentage }}%
@@ -150,6 +147,7 @@ export default {
 .progress-bar {
     white-space: nowrap;
     overflow: hidden;
+    border-radius: 0 !important;
 }
 
 .progress-bar-up {
@@ -218,7 +216,7 @@ export default {
     background-color: var(--color-btn-down);
 }
 
-.btn:hover {
-    opacity: 0.8;
+.square-border {
+  border-radius: 0 !important;
 }
 </style>
