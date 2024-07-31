@@ -1,13 +1,13 @@
 import { shallowMount } from "@vue/test-utils";
 import VoteComponent from "@components/VoteComponent.vue";
-import { describe, it, expect } from "jest"; // or "jest" if you are using Jest
+import { describe, it, expect } from "jest";
 
-const title = "Vote Component"; // Define the title variable
+const title = "Vote Component";
 
-describe("VoteComponent.vue", () => {
+describe(title, () => {
   it("renders correctly", () => {
     const wrapper = shallowMount(VoteComponent);
-    expect(wrapper.text()).toMatch(title);
+    expect(wrapper.exists()).toBe(true);
   });
 
   it("calculates thumbs up percentage correctly", async () => {

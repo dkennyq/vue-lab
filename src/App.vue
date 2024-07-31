@@ -1,9 +1,13 @@
 <template>
   <VoteDetailComponent :person="selectedPerson"></VoteDetailComponent>
   <div class="container mt-5">
-    <VoteAlert></VoteAlert>
+    <VoteAlert :registeredVote="registeredVote" ></VoteAlert>
     <h1>Previous Persons</h1>
-    <VoteComponent @select-person="showSelectPerson" v-for="(person, index) in persons" :key="index" :person="person" />
+    <VoteComponent v-for="(person, index) in persons" 
+      @vote-registered="voteRegistered" 
+      @select-person="showSelectPerson"
+      :key="index" 
+      :person="person" />
   </div>
 </template>
 
@@ -20,11 +24,13 @@ export default {
   components: {
     VoteComponent,
     VoteDetailComponent,
-    VoteAlert
+    VoteAlert,
   },
   data() {
     return {
       persons: [],
+      registeredVote: false,
+      // Default selected person to prevent null values in VoteDetailComponent
       selectedPerson: {
         id_person: 0,
         date_created: "2024-01-01T00:00:00",
@@ -54,8 +60,14 @@ export default {
           console.error('There was an error:', error);
         });
     },
+    // Method to handle the select-person event and show the selected person in VoteDetailComponent
     showSelectPerson(person) {
       this.selectedPerson = person;
+    },
+    // Method to handle the vote-registered event and close the alert message in VoteAlert component
+    voteRegistered(isRegistered) { 
+      console.log('voteRegistered', isRegistered);
+      this.registeredVote = isRegistered;
     }
   }
 }

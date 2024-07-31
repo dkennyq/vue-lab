@@ -31,13 +31,12 @@
                                         <font-awesome-icon icon="thumbs-down" class="text-white fs-2" />
                                     </button>
                                     <button id="btn-vote" @click="submitVote" :disabled="!userThumb"
-                                        class="btn btn-secondary fs-5 square-border border border-white">
+                                        :class="['btn', 'btn-secondary', 'fs-5', 'square-border', {'border': userThumb, 'border-white': userThumb}]">
                                         {{ voteButtonText }}
                                     </button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -81,9 +80,16 @@ export default {
     },
     data() {
         return {
+            // Save the user vote  to show the selected thumb
             userThumb: null,
+
+            // Save the current rating to show the progress bar
             currentRatingUp: this.person.total_thumbs_up,
+
+            // Save the current rating to show the progress bar
             currentRatingDown: this.person.total_thumbs_down,
+
+            // Save the vote status to show the vote button text (Vote Now or Vote Again)
             voteSubmited: false
         };
     },
@@ -100,14 +106,17 @@ export default {
         voteButtonText() {
             return this.voteSubmited ? 'Vote Again' : 'Vote Now';
         },
+        // Method to set the thumb up or thumb down icon
         thumbIcon() {
             return this.thumbsUpPercentage >= this.thumbsDownPercentage ? faThumbsUp : faThumbsDown;
         },
+        // Method to set the thumb up or thumb down icon color
         thumbIconColor() {
             return this.thumbsUpPercentage >= this.thumbsDownPercentage ? 'icon-vote-up' : 'icon-vote-down';
         }
     },
     methods: {
+        // Method to set the thumb up or thumb down when thumb button click
         rate(thumb) {
             if (thumb === 'up') {
                 this.userThumb = 'thumbs-up';
@@ -115,14 +124,15 @@ export default {
                 this.userThumb = 'thumbs-down';
             }
         },
+        // Method to submit the vote, if the vote is already submited, reset the user thumb and vote submited status
         submitVote() {
             if (this.voteSubmited) {
                 this.userThumb = null;
                 this.voteSubmited = false;
+                this.$emit('vote-registered', false);
             } else if (this.userThumb) {
                 this.Vote(this.userThumb);
                 this.$emit('select-person', this.person);
-                this.$emit('vote-submited');
             }
         },
         Vote(type) {
@@ -135,6 +145,7 @@ export default {
                     console.error('Error voting:', error);
                 });
 
+            // Update the current rating proges bar values.
             if (type === 'thumbs-up') {
                 this.currentRatingUp++;
             } else {
@@ -142,7 +153,11 @@ export default {
             }
 
             this.voteSubmited = true;
+
+            // Emit the vote-registered event to show the alert message  (Thanks for submitting your vote)
+            this.$emit('vote-registered', true);
         },
+        // Method to format the date to show the time ago in the vote list
         formatDate(dateString) {
             const now = new Date();
             const createdDate = new Date(dateString);

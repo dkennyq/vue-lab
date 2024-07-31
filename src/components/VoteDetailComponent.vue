@@ -24,16 +24,9 @@
                                     {{ person.detail_info }}
                                 </p>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button style="width: 100%;" class="btn btn-vote-up square-border">
-                                        <font-awesome-icon icon="thumbs-up" class="text-white fs-2" />
-                                    </button>
-                                </div>
-                                <div class="col">
-                                    <button style="width: 100%;" class="btn btn-vote-down square-border">
-                                        <font-awesome-icon icon="thumbs-down" class="text-white fs-2" />
-                                    </button>
+                            <div class="row mt-3">
+                                <div :class="[thumbIconColor]">
+                                    <font-awesome-icon :icon="thumbIcon" class="text-white fs-2" />
                                 </div>
                             </div>
                         </div>
@@ -62,9 +55,11 @@
 </template>
 
 <script>
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 export default {
     name: 'VoteDetailComponent',
     props: {
+        // Person object to display in the detail component.
         person: {
             type: Object,
             default: null,
@@ -76,6 +71,21 @@ export default {
     watch: {
         person(newValue) {
             console.log('Received person:', newValue);
+        }
+    },
+    methods: {
+        Vote(voteValue) {
+            this.$emit('register-vote', voteValue);
+        }
+    },
+    computed: {
+        // Method to set the thumb up or thumb down icon
+        thumbIcon() {
+            return this.person.total_thumbs_up >= this.person.total_thumbs_down ? faThumbsUp : faThumbsDown;
+        },
+        // Method to set the thumb up or thumb down icon color
+        thumbIconColor() {
+            return this.person.total_thumbs_up >= this.person.total_thumbs_down ? 'icon-vote-up' : 'icon-vote-down';
         }
     }
 }
@@ -98,7 +108,6 @@ export default {
     background: rgb(121 104 104 / 50%);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 20px;
     border-radius: 10px;
 }
 
